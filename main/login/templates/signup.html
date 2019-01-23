@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="modal fade" id="login-modal">
+     <div class="modal-dialog">
+           <div class="loginmodal-container">
+               <h1>Register yourself</h1><br>
+             <form>
+                    <input type="text" name="username" placeholder="Enter uniq Username"/>
+                    <input type="text" name="first_name" placeholder="Enter Full Name"/>
+                    <input type="text" name="last_name" placeholder="Enter Full Name" value="" size="35" required />
+                    <input type="date" name="dob"  value="" size="35" required>
+                    <input type="password" name="password" placeholder="Password"/>
+                    <input type="password" name="rpassword" placeholder="re-Password" />
+
+
+                    <input type="submit" name="login" class="login loginmodal-submit" value="Signup">
+                    <input type="submit" name="login" class="login loginmodal-reset" value="Reset">
+
+                    <a href="{% url 'login' %}"><font>Already A User?</font></a>
+             </form>
+           </div>
+       </div>
+     </div>
+{% endblock %}
