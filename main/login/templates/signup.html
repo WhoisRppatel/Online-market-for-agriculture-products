@@ -4,10 +4,11 @@
      <div class="modal-dialog">
            <div class="loginmodal-container">
                <h1>Register yourself</h1><br>
-             <form>
+             <form action="/login/signup/" method="POST">
+                {% csrf_token %}
                     <input type="text" name="username" placeholder="Enter uniq Username"/>
-                    <input type="text" name="first_name" placeholder="Enter Full Name"/>
-                    <input type="text" name="last_name" placeholder="Enter Full Name" value="" size="35" required />
+                    <input type="text" name="first_name" placeholder="Enter First Name"/>
+                    <input type="text" name="last_name" placeholder="Enter Last Name" value="" size="35" required />
                     <input type="date" name="dob"  value="" size="35" required>
                     <input type="password" name="password" placeholder="Password"/>
                     <input type="password" name="rpassword" placeholder="re-Password" />
