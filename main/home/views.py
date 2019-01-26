@@ -7,7 +7,9 @@ from django.contrib import auth
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.utils.timezone import timezone
+from home.models import *
+from datetime import datetime
+#from django.utils.timezone import timezone
 # Create your views here.
 def addproduct(request):
     c = {}
@@ -16,12 +18,18 @@ def addproduct(request):
 
 def newproduct(request):
     name = request.POST.get('name', '')
-    catagory = request.POST.get('catagory', '')
-    date_time=timezone.now()
+    category = request.POST.get('category', '')
     description = request.POST.get('description', '')
-    quantity = request.POST.get('quantity', '')
-    price = request.POST.get('price', '')
-
-    p = Product(name=name,catagory=catagory,time=date_time,description=description,price=price)
-    p.save()
-    return render_to_response('home.html')
+    quantity = float(request.POST.get('quantity', ''))
+    price1 = int(request.POST.get('price', ''))
+    time=datetime.now()
+    p = Product(name=name,category=category,quantity=quantity,time=time,owner=request.user,description=description,price=price1)
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            p.pic_path = form.cleaned_data['picture']
+            p.save()
+            return render_to_response('home.html')     
+    else:
+        print("adfsvkhdbmhefsy")
+        return render_to_response('home.html')

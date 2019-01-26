@@ -6,14 +6,20 @@
                <h1>Register yourself</h1><br>
              <form action="/login/signup/" method="POST">
                 {% csrf_token %}
-                    <input type="text" name="username" placeholder="Enter uniq Username"/>
-                    <input type="text" name="first_name" placeholder="Enter First Name"/>
-                    <input type="text" name="last_name" placeholder="Enter Last Name" value="" size="35" required />
-                    <input type="date" name="dob"  value="" size="35" required>
+                    
+                    <input type="text" name="name" placeholder="Enter Full Name"/>
+                    <input type="text" name="city" placeholder="Enter your city"/>
+                    <input type="text" name="mob" placeholder="Enter your Mobile number"/>
+                    <input type="text" name="username" placeholder="Enter Uniq Username"/>
                     <input type="password" name="password" placeholder="Password"/>
                     <input type="password" name="rpassword" placeholder="re-Password" />
-
-
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="defaultUnchecked" name="typeis" value="Farmer">
+                      <label class="custom-control-label" for="defaultchecked"><b>Farmer</b></label>
+                      <input type="radio" class="custom-control-input" id="defaultChecked" name="typeis" checked value="Merchant">
+                      <label class="custom-control-label" for="defaultUnChecked"><b>Merchant</b></label>
+                    </div>
+                    <br/>
                     <input type="submit" name="login" class="login loginmodal-submit" value="Signup">
                     <input type="submit" name="login" class="login loginmodal-reset" value="Reset">
 

@@ -3,8 +3,9 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal">
-<fieldset>
+<form class="form-horizontal" action="/home/newproduct/" enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  <fieldset>
 
 <legend>PRODUCTS</legend>
 
@@ -12,7 +13,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="name">PRODUCT NAME</label>  
   <div class="col-md-4">
-  <input name="name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
+  <input name="name"  class="form-control input-md" required="" type="text">
     
   </div>
 </div>
@@ -24,28 +25,14 @@
   <label class="col-md-4 control-label" for="category">PRODUCT CATEGORY</label>
   <div class="col-md-4">
     <select name="category" class="form-control">
+        <option value="Grains">Grains</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Fruits">Fruits</option>
+        <option value="Pulses">Pulses</option>
     </select>
   </div>
 </div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="quantity"> QUANTITY</label>  
-  <div class="col-md-4">
-  <input name="quantity" placeholder="AVAILABLE QUANTITY" class="form-control input-md" required="" type="text">
-    
-  </div>
-</div>
-
-<div class="form-group">
-    <label class="col-md-4 control-label" for="quantity"> </label>  
-    <div class="col-md-4">
-    <input name="quantity" placeholder="AVAILABLE QUANTITY" class="form-control input-md" required="" type="number">
-      
-    </div>
-  </div>
-
-<!-- Textarea -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="description">PRODUCT DESCRIPTION</label>
   <div class="col-md-4">                     
@@ -53,11 +40,32 @@
   </div>
 </div>
 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="picture">PRODUCT PICTURE</label>
+  <div class="col-md-4">                     
+    <input class="form-control" type="file" name="picture" required/>
+  </div>
+</div>
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="quantity">QUANTITY</label>  
+  <div class="col-md-4">
+  <input name="quantity"  class="form-control input-md" required="" type="text">
+</div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="price">EXPECTED PRICE</label>
+  <div class="col-md-4">                     
+    <input name="price"  class="form-control input-md" required="" type="text">
+  </div>
+</div>
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
   <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Add Product</button>
+    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Add Product</button>
+    <button type="reset" id="singlebutton" name="singlebutton" class="btn btn-danger">Reset</button>
   </div>
   </div>
 
