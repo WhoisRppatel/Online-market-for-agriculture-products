@@ -11,6 +11,9 @@ from home.models import *
 from datetime import datetime
 #from django.utils.timezone import timezone
 # Create your views here.
+def loggedin(request):
+    return render_to_response('home.html', {"full_name": request.user.username})
+
 def addproduct(request):
     c = {}
     c.update(csrf(request))

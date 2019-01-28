@@ -24,7 +24,11 @@ def auth_view(request):
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        return HttpResponseRedirect('/login/loggedin/')
+        u=UserInfo.check(userid=request.user)
+        print(u)
+        request.session['type']=u.usertype
+        print(request.session['type'])
+        return HttpResponseRedirect('/home/loggedin/')
     else:
         c = {}
         c.update(csrf(request))
@@ -39,10 +43,6 @@ def adduser(request):
 
 def signedup(request):
     return render_to_response('login.html', {"full_name": request.user.username, 'signup': True})
-
-
-def loggedin(request):
-    return render_to_response('home.html', {"full_name": request.user.username})
 
 
 def invalidlogin(request):
