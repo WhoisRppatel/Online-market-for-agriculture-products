@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="{% static "css/style.css" %}">
 		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
 		<script src="{% static "js/materialize.min.js" %}"></script>
+
 		<script src="{% static "js/script.js" %}"></script>
 <style>
 body {
@@ -70,19 +71,13 @@ body {
 					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
 				</ul>
 			</nav>
-			<div class="abc">
-          {% if request.session.usertype == "Farmer" %}
-          <h4>Welcome Farmer</h4>
-          {% else %}
-          <h4>Welcome Merchant</h4>
-          {% endif %}
-					 
-			</div>
+		<div class="abc">
+          <h4>Welcome Admin</h4>
+		</div>
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="{% url 'today' %}">Today's Market</a>
-  <a href="{% url 'addproduct'%}">Add Product</a>
+  <a href="{% url 'addproductprice'%}">Add Product Price</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
 <script>

@@ -7,17 +7,25 @@ from django.contrib import auth
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.contrib import messages
+from login.models import UserInfo
 from home.models import *
 from datetime import datetime
 #from django.utils.timezone import timezone
 # Create your views here.
 def loggedin(request):
+    if request.user.username == "rp":
+        return render_to_response('home2.html')
     return render_to_response('home.html', {"full_name": request.user.username})
 
 def addproduct(request):
     c = {}
     c.update(csrf(request))
     return render_to_response('addproduct.html',c)
+
+def addproductprice(request):
+    c={}
+    c.update(csrf(request))
+    return render_to_response('addproductprice.html',c)
 
 def newproduct(request):
     name = request.POST.get('name', '')
@@ -36,3 +44,26 @@ def newproduct(request):
     else:
         print("adfsvkhdbmhefsy")
         return render_to_response('home.html')
+
+def addprice(request):
+    c={}
+    c.update(csrf(request))
+    name=request.POST.get('name','')
+    category=request.POST.get('category','')
+    pricelow=request.POST.get('pricelow','')
+    pricehigh=request.POST.get('pricehigh','')
+    city=request.POST.get('city','')
+    time=datetime.now()
+    M=Market(city=city,category=category,minprice=int(pricelow),maxprice=int(pricehigh),time=time,name=name)
+    if int(pricelow)>int(pricehigh):
+        return render_to_response('addproductprice.html',c)
+    else:
+        M.save()
+        return render_to_response('addproductprice.html',c)
+
+def today(request):
+    c={}
+    c.update(csrf(request))
+    M = Market.objects.all()
+    c.update({"M": M})
+    return render_to_response('today.html',c)

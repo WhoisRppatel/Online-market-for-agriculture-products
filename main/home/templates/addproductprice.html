@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <title>{% block title %}Add Product Prices{% endblock %} | OMAP</title>
+        {% load static %}
+		<!--<link rel="icon" href="imageset/favicon.png">-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
+		<link rel="stylesheet" href="{% static "css/style.css" %}">
+		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+		<script src="{% static "js/materialize.min.js" %}"></script>
+		<script src="{% static "js/script.js" %}"></script>
+</head>
+<body >
+        <div class="container" >
+                <div class="row">
+                  <div class="col-md-6">
+                  <h4>Add Product Price</h4>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-md-6">
+                <form role="form" action="/home/addprice/" method="POST">
+                    {% csrf_token %}
+                  <select class="form-control" name="city"><option>Please Select City</option>
+                    <option>Ahmedabad</option>
+                    <option>Nadiad</option>
+                    <option>Anand</option>
+                    <option>Surat</option>
+                    <option>Vadodara</option>
+                  </select>
+                  <select class="form-control" name="category"><option>Please Select Categeory</option>
+                    <option value="Grains">Grains</option>
+                    <option value="Vegetables">Vegetables</option>
+                    <option value="Fruits">Fruits</option>
+                    <option value="Pulses">Pulses</option>
+                  </select>
+                  
+               <div class="form-group">
+                 <label for="productname" class="loginFormElement">Product Name:</label>
+                 <input class="form-control" name="name" type="text">
+               </div>
+                  
+               <div class="form-group">
+                 <label for="productprice" class="loginFormElement">Product Minimum Price</label>
+                 <input class="form-control" name="pricelow" type="number">
+               </div>
+               <div class="form-group">
+                    <label for="productprice" class="loginFormElement">Product Maximum Price</label>
+                    <input class="form-control" name="pricehigh" type="number">
+                </div>
+
+                <button type="submit" id="loginSubmit" class="btn btn-success loginFormElement">Add Product</button>
+                <button type="reset" id="loginSubmit" class="btn btn-success loginFormElement" >Reset</button>        
+          </div></form>
+         </div>     
+         <a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>               
+</body>
+</html>

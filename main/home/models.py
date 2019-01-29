@@ -17,3 +17,11 @@ class Product(models.Model):
     status=models.BooleanField(default=False)
     quantity=models.FloatField(default=1.0)
     time=models.DateTimeField()
+
+class Market(models.Model):
+    city=models.CharField(max_length=30)
+    name=models.CharField(max_length=50)
+    category=models.CharField(max_length=30)
+    minprice=models.IntegerField()
+    maxprice=models.IntegerField()
+    time=models.DateTimeField()

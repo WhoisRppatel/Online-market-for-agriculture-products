@@ -1,18 +1,72 @@
-<div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Alpha</td>
-                    <td>Ante turpis integer aliquet porttitor.</td>
-                    <td>10.00</td>
-                </tr>
-            </tbody>
-        </table>
-</div>                   
+<!DOCTYPE html>
+<html>
+<head>
+        {% load static %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static "css/style.css" %}">
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button2 {background-color: #008CBA;}
+</style>
+</head>
+<body>
+</br>
+</br>
+<div class="row">
+        <div class="col-md-6">
+            <h2>Today's Market</h2>
+        </div>
+      </div>
+<table id="customers">
+        <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Min price</th>
+                <th>Max price</th>
+        </tr>
+{% for ob in M %}  
+  <tr>
+    <td>{{ ob.name }}</td>
+    <td>{{ ob.category }}</td>
+    <td>{{ ob.minprice }}</td>
+    <td>{{ ob.maxprice }}</td>
+  </tr>
+{% endfor %}  
+</table>
+<a href="{% url 'loggedin' %}" class="btn btn-info" role="button" >Back to Home</a>
+</body>
+</html>

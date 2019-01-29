@@ -14,8 +14,7 @@
   <label class="col-md-4 control-label" for="name">PRODUCT NAME</label>  
   <div class="col-md-4">
   <input name="name"  class="form-control input-md" required="" type="text">
-    
-  </div>
+</div>
 </div>
 
 
@@ -39,13 +38,14 @@
     <textarea class="form-control" name="description"></textarea>
   </div>
 </div>
-
+{% if request.session.usertype == "Farmer" %}
 <div class="form-group">
-  <label class="col-md-4 control-label" for="picture">PRODUCT PICTURE</label>
-  <div class="col-md-4">                     
-    <input class="form-control" type="file" name="picture" required/>
+    <label class="col-md-4 control-label" for="picture">PRODUCT PICTURE</label>
+    <div class="col-md-4">                     
+      <input class="form-control" type="file" name="picture" required/>
+    </div>
   </div>
-</div>
+{% endif %}
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="quantity">QUANTITY</label>  
@@ -53,13 +53,22 @@
   <input name="quantity"  class="form-control input-md" required="" type="text">
 </div>
 </div>
-
+{% if request.session.usertype == "Farmer" %}
 <div class="form-group">
-  <label class="col-md-4 control-label" for="price">EXPECTED PRICE</label>
-  <div class="col-md-4">                     
-    <input name="price"  class="form-control input-md" required="" type="text">
+    <label class="col-md-4 control-label" for="price">EXPECTED PRICE</label>
+    <div class="col-md-4">                     
+      <input name="price"  class="form-control input-md" required="" type="text">
+    </div>
   </div>
-</div>
+{% else %}
+<div class="form-group">
+    <label class="col-md-4 control-label" for="price">Today's PRICE</label>
+    <div class="col-md-4">                     
+      <input name="price"  class="form-control input-md" required="" type="text">
+    </div>
+  </div>
+{% endif %}
+
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
@@ -71,3 +80,4 @@
 
 </fieldset>
 </form>
+<a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>
