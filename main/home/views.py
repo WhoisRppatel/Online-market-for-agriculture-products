@@ -13,7 +13,7 @@ from datetime import datetime
 #from django.utils.timezone import timezone
 # Create your views here.
 def loggedin(request):
-    if request.user.username == "rp":
+    if request.user.username == "admin":
         return render_to_response('home2.html')
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -75,3 +75,26 @@ def today(request):
     M = Market.objects.all()
     c.update({"M": M})
     return render_to_response('today.html',c)
+
+def viewproducts(request):
+    c={}
+    c.update(csrf(request))
+    market=Market.objects.all()
+    c.update({"market":market})
+    return render_to_response('admin_market.html',c)
+
+def updateprice(request,product_id):
+    c={}
+    c.update(csrf(request))
+    print(product_id)
+    min=request.POST.get('lmin','')
+    max=request.POST.get('lmax','')
+    #print(min)
+    #print(max)
+    #print("Hello")
+    market=Market.objects.get(id=product_id)
+    market.minprice=min
+    market.maxprice=max
+    market.save()
+    print(market)
+    return redirect('viewproducts')

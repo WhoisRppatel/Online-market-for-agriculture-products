@@ -1,0 +1,51 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('td.label').click(function () {
+        var tr = $(this).parent();
+        tr.find('.edit').hide();
+        tr.find('a.link').text('');
+        tr.find('.update').show();
+       tr.find('input.edit-input').show();
+       //tr.find('#min').attr("value",tr.find('#lmin').text());
+       //tr.find('#max').val(tr.find('#lmax').text());
+    });
+});
+
+</script>
+<style>
+.edit-input,.update {
+    display:none;
+}
+</style>
+{% csrf_token %}
+
+<table id="customers">
+    <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Min price</th>
+            <th>Max price</th>
+    </tr>
+{% for ob in market %}  
+<tr>
+    <form method="post" action="updateprice/{{ ob.id }}">{% csrf_token %}
+<td >{{ ob.name }} </td>
+<td >{{ ob.category }}</td>
+<td>
+    <label class="edit" id="lmin" >{{ ob.minprice }} </label>
+    <input type="text" class="edit-input" id="min" name="lmin" value="{{ ob.minprice }}"/>
+</td>
+<td>
+    <label class="edit" id="lmax">{{ ob.maxprice }} </label>
+    <input type="text" class="edit-input" id="max" name="lmax" value="{{ ob.maxprice }}"/>
+</td>
+<td class="label">
+    <a class="link">Edit</a>
+    <button class="update" type="submit">update</a>
+</td>
+</form>
+</tr>
+{% endfor %}  
+</table>
+<a href="{% url 'loggedin' %}" class="btn btn-info" role="button" >Back to Home</a>
