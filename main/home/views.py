@@ -15,11 +15,19 @@ from datetime import datetime
 def loggedin(request):
     if request.user.username == "rp":
         return render_to_response('home2.html')
-    return render_to_response('home.html', {"full_name": request.user.username})
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
+    print(s.usertype)
+    return render_to_response('home.html', {"usertype": s.usertype})
 
 def addproduct(request):
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
     c = {}
     c.update(csrf(request))
+    c.update({"usertype": s.usertype})
     return render_to_response('addproduct.html',c)
 
 def addproductprice(request):

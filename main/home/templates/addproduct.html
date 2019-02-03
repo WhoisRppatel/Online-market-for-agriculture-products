@@ -38,7 +38,7 @@
     <textarea class="form-control" name="description"></textarea>
   </div>
 </div>
-{% if request.session.usertype == "Farmer" %}
+{% if usertype != "Merchant" %}
 <div class="form-group">
     <label class="col-md-4 control-label" for="picture">PRODUCT PICTURE</label>
     <div class="col-md-4">                     
@@ -53,7 +53,7 @@
   <input name="quantity"  class="form-control input-md" required="" type="text">
 </div>
 </div>
-{% if request.session.usertype == "Farmer" %}
+{% if usertype != "Merchant" %}
 <div class="form-group">
     <label class="col-md-4 control-label" for="price">EXPECTED PRICE</label>
     <div class="col-md-4">                     
