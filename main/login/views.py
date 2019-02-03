@@ -24,7 +24,7 @@ def auth_view(request):
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        return HttpResponseRedirect('/login/loggedin/')
+        return HttpResponseRedirect('/home/loggedin/')
     else:
         c = {}
         c.update(csrf(request))
@@ -41,10 +41,6 @@ def signedup(request):
     return render_to_response('login.html', {"full_name": request.user.username, 'signup': True})
 
 
-def loggedin(request):
-    return render_to_response('home.html', {"full_name": request.user.username})
-
-
 def invalidlogin(request):
     return render_to_response('invalidlogin.html')
 
@@ -59,18 +55,22 @@ def logout(request):
 def signup(request):
     unm = request.POST.get('username', '')
     pas = request.POST.get('password', '')
-    dob = request.POST.get('dob', '')
     mob = request.POST.get('mob', '')
-    first_name = request.POST.get('first_name', '')
-    last_name = request.POST.get('last_name', '')
+    city = request.POST.get('city', '')
+    name = request.POST.get('name', '')
     repas = request.POST.get('rpassword', '')
     email = request.POST.get('email', '')
+    typeis=request.POST.get('typeis','')
     if repas == pas:
-        s = User.objects.create_user(username=unm, password=pas, email=email,first_name=first_name,last_name=last_name)
-        p = UserInfo(userid=s,dob=dob, mob=mob)
-        s.save()
-        p.save()
-        return HttpResponseRedirect('/login/login/')
+        if len(mob)==10 and (mob.isdigit()==True):
+            s = User.objects.create_user(username=unm, password=pas, email=email)
+            p = UserInfo(userid=s,name=name,mob=mob,city=city,usertype=typeis)
+            s.save()
+            p.save()
+            return HttpResponseRedirect('/login/login/')
+        else:
+            messages.warning(request, 'Enter Valid Mobile Number')
+            return HttpResponseRedirect('/login/adduser/')        
     else:
         messages.warning(request, 'Password fields do not match')
         return HttpResponseRedirect('/login/adduser/')
@@ -93,3 +93,4 @@ def signup(request):
 
 
     """ 
+   

@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 class UserInfo(models.Model):
     userid = models.OneToOneField(User,on_delete=models.CASCADE)
-    #first_name = models.CharField(max_length=50)
-    #last_name = models.CharField(max_length=50)
-    dob = models.DateField(null=True)
-    mob = models.CharField(max_length=10)
+    name=models.CharField(max_length=20,default="anything")
+    city=models.CharField(max_length=10,default="nadiad")
+    mob = models.IntegerField()
+    usertype=models.CharField(max_length=10,default="Farmer")
 # Create your models here.

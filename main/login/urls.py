@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^signedup/$', signedup),
     url(r'^auth/$', auth_view),
     url(r'^logout/$', logout,name='logout'),
-    url(r'^loggedin/$', loggedin),
     url(r'^invalidlogin/$', invalidlogin),
     url(r'^$', login),
 
