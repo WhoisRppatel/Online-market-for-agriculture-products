@@ -10,6 +10,7 @@ from django.contrib import messages
 from login.models import UserInfo
 from home.models import *
 from datetime import datetime
+
 #from django.utils.timezone import timezone
 # Create your views here.
 def loggedin(request):
@@ -93,8 +94,10 @@ def updateprice(request,product_id):
     #print(max)
     #print("Hello")
     market=Market.objects.get(id=product_id)
-    market.minprice=min
-    market.maxprice=max
-    market.save()
+    if (min != '') & (max != '') & (min.isnumeric() & min.isnumeric()):
+        if(int(min) < int(max)):
+            market.minprice=min
+            market.maxprice=max
+            market.save()
     print(market)
     return redirect('viewproducts')
