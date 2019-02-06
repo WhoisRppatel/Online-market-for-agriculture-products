@@ -49,7 +49,10 @@ def newproduct(request):
         if form.is_valid():
             p.pic_path = form.cleaned_data['picture']
             p.save()
-            return render_to_response('home.html')     
+            return render_to_response('home.html')
+        else:
+            p.save()
+            return render_to_response('home.html')
     else:
         print("adfsvkhdbmhefsy")
         return render_to_response('home.html')
@@ -101,3 +104,31 @@ def updateprice(request,product_id):
             market.save()
     print(market)
     return redirect('viewproducts')
+def nearby(request):
+    Ans=[]
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    if s.usertype=="Merchant":
+        Q=Product.objects.filter(owner=u).values_list('name', flat=True)
+        print(Q)
+        S=UserInfo.objects.filter(usertype="Farmer",city=s.city)
+        print(S)
+        for i in S:
+            print(i)
+            p=Product.objects.filter(owner=i.userid)
+            for j in p:
+                if j.name in Q:
+                    Ans.append(j)
+    else:
+        Q=Product.objects.filter(owner=u).values_list('name', flat=True)
+        print(Q)
+        S=UserInfo.objects.filter(usertype="Merchant",city=s.city)
+        print(S)
+        for i in S:
+            print(i)
+            p=Product.objects.filter(owner=i.userid)
+            for j in p:
+                if j.name in Q:
+                    Ans.append(j)
+    print(Ans)                
+    return render_to_response('nearby.html', {"usertype1": s.usertype,"L":Ans})

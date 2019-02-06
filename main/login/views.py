@@ -63,7 +63,7 @@ def signup(request):
     typeis=request.POST.get('typeis','')
     if repas == pas:
         if len(mob)==10 and (mob.isdigit()==True):
-            s = User.objects.create_user(username=unm, password=pas, email=email)
+            s = User.objects.create_user(username=unm, password=pas, email=email,first_name=name)
             p = UserInfo(userid=s,name=name,mob=mob,city=city,usertype=typeis)
             s.save()
             p.save()
