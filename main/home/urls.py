@@ -9,4 +9,7 @@ urlpatterns = [
     url(r'^loggedin/$', loggedin,name='loggedin'),
     url(r'^addprice/$', addprice),
     url(r'^today/$', today,name='today'),
+    url(r'^viewproducts/updateprice/(?P<product_id>\d+)$', updateprice,name='updateprice'),
+    url(r'^viewproducts/$', viewproducts,name='viewproducts'),
+    
 ]
