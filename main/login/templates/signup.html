@@ -6,7 +6,6 @@
                <h1>Register yourself</h1><br>
              <form action="/login/signup/" method="POST">
                 {% csrf_token %}
-                    
                     <input type="text" name="name" placeholder="Enter Full Name"/>
                     <input type="text" name="city" placeholder="Enter your city"/>
                     <input type="text" name="mob" placeholder="Enter your Mobile number"/>
@@ -22,7 +21,6 @@
                     <br/>
                     <input type="submit" name="login" class="login loginmodal-submit" value="Signup">
                     <input type="submit" name="login" class="login loginmodal-reset" value="Reset">
-
                     <a href="{% url 'login' %}"><font>Already A User?</font></a>
              </form>
            </div>
