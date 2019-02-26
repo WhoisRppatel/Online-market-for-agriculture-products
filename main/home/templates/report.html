@@ -1,0 +1,32 @@
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Report</h2>
+    </div>
+  </div>
+<table id="customers">
+    <tr>
+            <th>ProductName</th>
+            <th>Seller Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+    </tr>
+{% for d in deals %}  
+<tr>
+<td>{{ d.product_id.name }}</td>
+<td>{{ d.product_id.owner }}</td>
+<td>{{ d.quantity_sold }}</td>
+<td>{{ d.price_sold }}</td>
+<td><form action="{% url 'review' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{ d.product_id.owner.id }}" name="to_user"/>
+    <input type="hidden" value="{{ d.product_id }}" name="product_id"/>
+    <input value="Give review" type="submit" >
+</form>
+</td>
+</tr>
+{% endfor %}  
+</table>
+{% endblock %}

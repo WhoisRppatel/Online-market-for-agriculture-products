@@ -25,3 +25,19 @@ class Market(models.Model):
     minprice=models.IntegerField()
     maxprice=models.IntegerField()
     time=models.DateTimeField()
+
+class Deal(models.Model):
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    buyer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='buyer_name')
+    price_sold=models.IntegerField()
+    quantity_sold=models.FloatField(default=1.0)
+    time=models.DateTimeField()
+
+class Review(models.Model):
+    rating=models.IntegerField()
+    title=models.CharField(max_length=20)
+    text=models.CharField(max_length=150)
+    to_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='to_user')
+    from_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='from_user')
+    time=models.DateTimeField()
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)

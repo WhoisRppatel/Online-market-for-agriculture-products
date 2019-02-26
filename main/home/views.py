@@ -14,11 +14,12 @@ from datetime import datetime
 #from django.utils.timezone import timezone
 # Create your views here.
 def loggedin(request):
-    if request.user.username == "admin":
+    if request.user.username == "admin" or request.user.username == "rp":
         return render_to_response('home2.html')
     u=request.user
     s=UserInfo.objects.get(userid=u)
     request.session["usertype"]=s.usertype
+    request.session["uid"]=s.id
     print(s.usertype)
     return render_to_response('home.html', {"usertype": s.usertype})
 
@@ -132,3 +133,40 @@ def nearby(request):
                     Ans.append(j)
     print(Ans)                
     return render_to_response('nearby.html', {"usertype1": s.usertype,"L":Ans})
+
+
+def report(request):
+    c={}
+    c.update(csrf(request))
+    if(request.session["uid"]):
+        uid=request.session["uid"]
+    if(request.session["usertype"] == "Merchant"):
+        deals=Deal.objects.filter(buyer=uid)
+    c.update({"deals":deals})
+    print(c)
+    return render_to_response('report.html',c)
+
+def review(request):
+    to_user=request.POST.get('to_user','')
+    to_user=User.objects.get(id=to_user)
+    print(to_user.username)
+    product_id=request.POST.get('product_id','')
+    #print(to_user.username)
+    c={}
+    c.update(csrf(request))
+    c.update({'to_user':to_user})
+    c.update({'product_id':product_id})
+    return render_to_response('review.html',c)
+
+def addreview(request):
+    title=request.POST.get('title','')
+    rating=request.POST.get('rating','')
+    text=request.POST.get('text','')
+    from_user=request.session["uid"]
+    to_user=request.POST.get('to_user','')
+    to_user=User.objects.get(id=to_user)
+    from_user=User.objects.get(id=from_user)
+    time=datetime.now()
+    r=Review(title=title,rating=rating,text=text,from_user=from_user,to_user=to_user,time=time)
+    r.save()
+    return redirect('report')

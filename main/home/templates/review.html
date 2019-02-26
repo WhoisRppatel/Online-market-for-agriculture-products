@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>{% block title %}Add Review{% endblock %} | OMAP</title>
+        {% load static %}
+		<!--<link rel="icon" href="imageset/favicon.png">-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
+		<link rel="stylesheet" href="{% static "css/style.css" %}">
+		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+		<script src="{% static "js/materialize.min.js" %}"></script>
+		<script src="{% static "js/script.js" %}"></script>
+</head>
+<body >
+        <div class="container" >
+                <div class="row">
+                  <div class="col-md-6">
+                  <h4>Add Review to {{ to_user.username }}
+                      
+                  </h4>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-md-6">
+                <form role="form" action="/home/addreview/" method="POST">
+                    {% csrf_token %}
+                 
+                    <div class="form-group">
+                        <label for="rrating" class="loginFormElement">Rating</label>
+                        <input class="form-control" name="rating" type="number">
+                      </div>
+
+               <div class="form-group">
+                <label for="rtitle" class="loginFormElement">Title</label>
+                <input class="form-control" name="title" type="text">
+              </div>
+
+               <div class="form-group">
+                 <label for="rtext" class="loginFormElement">Review</label>
+                 <input class="form-control" name="text" type="text">
+               </div>
+                  
+               
+              <input type="hidden" name="to_user" value="{{ to_user.id }}" />
+              <input type="hidden" name="product_id" value="{{ product_id }}" />
+                <button type="submit" id="loginSubmit" class="btn btn-success loginFormElement">Add Review</button>
+                <button type="reset" id="loginSubmit" class="btn btn-success loginFormElement" >Reset</button>        
+          </div></form>
+         </div>     
+         <a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>               
+</body>
+</html>
