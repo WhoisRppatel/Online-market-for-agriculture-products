@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from .views import *
+from chat.views import *
 
 urlpatterns = [
     url(r'^addproduct/$', addproduct, name='addproduct'),
@@ -8,6 +9,8 @@ urlpatterns = [
     url(r'^nearby/$', nearby, name='nearby'),
     url(r'^loggedin/$', loggedin,name='loggedin'),
     url(r'^addprice/$', addprice),
+    url(r'^chat/$', chat,name='chat'),
+    url(r'^chat/$', chatme,name='chatme'),
     url(r'^today/$', today,name='today'),
     url(r'^viewproducts/updateprice/(?P<product_id>\d+)$', updateprice,name='updateprice'),
     url(r'^viewproducts/$', viewproducts,name='viewproducts'),

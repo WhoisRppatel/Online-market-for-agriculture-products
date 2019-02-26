@@ -14,7 +14,7 @@ from datetime import datetime
 #from django.utils.timezone import timezone
 # Create your views here.
 def loggedin(request):
-    if request.user.username == "admin":
+    if request.user.username == "admin" or request.user.username == "rp":
         return render_to_response('home2.html')
     u=request.user
     s=UserInfo.objects.get(userid=u)
