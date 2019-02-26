@@ -7,4 +7,4 @@ class Message(models.Model):
     sender=models.ForeignKey(User,on_delete=models.CASCADE,related_name='sender')
     receiver=models.ForeignKey(User,on_delete=models.CASCADE,related_name='receiver')
     message=models.CharField(max_length=256)
-    time=models.DateTimeField()
+    #time=models.DateTimeField()

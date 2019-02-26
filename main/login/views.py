@@ -24,6 +24,9 @@ def auth_view(request):
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
+        U=UserInfo.objects.get(userid=request.user)
+        request.session["usertype"]=U.usertype
+        #print(U.usertype)
         return HttpResponseRedirect('/home/loggedin/')
     else:
         c = {}

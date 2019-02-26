@@ -15,17 +15,38 @@ from datetime import datetime
 def chat(request):
     print(request.user)
     s=Message.objects.filter(sender=request.user)
-    print(s)
+    p=Message.objects.filter(receiver=request.user)
     chater=[]
     for i in s:
-        if i.sender==request.user:
-            chater.append(i.receiver)
-            print(i.receiver)
-        else:
-            chater.append(i.sender)
-            print(i.sender)    
-    chater=list(set(chater))    
+        chater.append(i.receiver)
+    for i in p:
+        chater.append(i.sender)    
+    chater=list(set(chater))
+    print(chater)
     c = {}
     c.update(csrf(request))
-    c.update({"chaters": chater})
-    return render_to_response('chat.html')
+    c.update({"C1": chater})
+    return render_to_response('chat.html',c)
+def chatme(request,username):
+    current=User.objects.get(username=request.user.username)
+    U=User.objects.get(username=username)
+    SS=U.first_name
+    SP=U.username
+    M=Message.objects.filter(sender=current,receiver=U) 
+    S=Message.objects.filter(sender=U,receiver=current)
+    c = {}
+    c.update(csrf(request))
+    c.update({"M1": M})
+    c.update({"SP": SP})
+    c.update({"M2": S})
+    c.update({"SS":SS})
+    return render_to_response('chatme.html',c)
+    
+def AddMessage(request,username):
+    #print(request.session.usertype)
+    m = request.POST.get('message', '')
+    U1=User.objects.get(username=request.user.username)
+    U2=User.objects.get(username=username)
+    M=Message(sender=U1,receiver=U2,message=m)
+    M.save()
+    return chatme(request,username)    
