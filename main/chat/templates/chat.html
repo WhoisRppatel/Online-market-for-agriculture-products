@@ -1,0 +1,102 @@
+{% load static %}
+
+<html>
+	<head>
+		<title>{% block title %}Home{% endblock %} | OMAP</title>
+		<!--<link rel="icon" href="imageset/favicon.png">-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
+
+		<link rel="stylesheet" href="{% static "css/style.css" %}">
+		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+		<script src="{% static "js/materialize.min.js" %}"></script>
+		<script src="{% static "js/script.js" %}"></script>
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #0001f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+	<body class="is-preload">
+		<!-- Nav -->
+			<nav id="menu" style="background-color: rgb(92, 92, 233);">
+				<ul class="links">
+					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
+				</ul>
+      </nav>
+    <div class="row">
+      <div class="col-md-6">
+         <h2>List of People</h2>
+      </div>
+    </div>
+     {% for ob in C1 %}  
+     <div class="collection " >
+         <a href="{% url 'chatme' ob %}" class="collection-item w3-display-topright" style="color:rgb(28, 16, 71); "><h5>{{ ob.first_name }}</h5></a>
+       </div>
+         <hr />
+     {% endfor %}    
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="{% url 'today' %}">Today's Market</a>
+  {% if usertype != "Merchant" %}
+  <a href="{% url 'addproduct' %}">Sell Product</a>  
+  <a href="{% url 'nearby' %}">Near By Merchants</a>
+  {% else %}
+  <a href="{% url 'addproduct' %}">Buy Product</a>
+  <a href="{% url 'nearby' %}">Near By Farmers</a>
+  {% endif %}
+  <a href="{% url 'chat' %}">Chat</a>
+  <a href="{% url 'logout' %}">Logout</a>
+</div>
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+	</body>
+</html>
