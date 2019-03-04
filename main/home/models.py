@@ -40,4 +40,4 @@ class Review(models.Model):
     to_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='to_user')
     from_user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='from_user')
     time=models.DateTimeField()
-    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    deal_id=models.ForeignKey(Deal,on_delete=models.CASCADE,default='1')
