@@ -27,20 +27,22 @@ def chat(request):
     c.update(csrf(request))
     c.update({"C1": chater})
     return render_to_response('chat.html',c)
-def chatme(request,username):
+def LoadMessages(request,username):
     current=User.objects.get(username=request.user.username)
     U=User.objects.get(username=username)
     SS=U.first_name
     SP=U.username
-    M=Message.objects.filter(sender=current,receiver=U) 
-    S=Message.objects.filter(sender=U,receiver=current)
+    print(" error ")
+    M=Message.objects.filter(sender=current ,receiver=U) 
+    M=M | Message.objects.filter(sender=U ,receiver=current)
+    M=M.order_by('id')
+    print("error 2")
     c = {}
     c.update(csrf(request))
     c.update({"M1": M})
     c.update({"SP": SP})
-    c.update({"M2": S})
     c.update({"SS":SS})
-    return render_to_response('chatme.html',c)
+    return render_to_response('messages.html',c)
     
 def AddMessage(request,username):
     #print(request.session.usertype)
@@ -49,4 +51,14 @@ def AddMessage(request,username):
     U2=User.objects.get(username=username)
     M=Message(sender=U1,receiver=U2,message=m)
     M.save()
-    return chatme(request,username)    
+    return chatme(request,username)
+
+def chatme(request, username):
+    U=User.objects.get(username=username)
+    SS=U.first_name
+    SP=U.username
+    c = {}
+    c.update({"SP": SP})
+    c.update(csrf(request))
+    c.update({"SS":SS})
+    return render_to_response("chatme.html", c)

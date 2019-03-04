@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^addprice/$', addprice),
     url(r'^chat/$', chat,name='chat'),
     url(r'^chatme/(?P<username>\w+)$', chatme,name='chatme'),
+    url(r'^load_messages/(?P<username>\w+)$', LoadMessages,name='loadmessages'),
     url(r'^today/$', today,name='today'),
     url(r'^viewproducts/updateprice/(?P<product_id>\d+)$', updateprice,name='updateprice'),
     url(r'^viewproducts/$', viewproducts,name='viewproducts'),

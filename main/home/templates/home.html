@@ -83,11 +83,11 @@ body {
     {% if usertype1 %}
     {% elif M1 %}
     {% elif C1 %}
-    {% elif request.session.usertype != "Merchant" %}
+    {% elif usertype != "Merchant" %}
 			<div class="abc">
           <h4>Welcome Farmer</h4>
       </div>
-      {% else %}
+    {% else %}
       <div class="abc2">
         <h4>Welcome Merchant</h4>
     </div>
@@ -100,7 +100,7 @@ body {
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="{% url 'today' %}">Today's Market</a>
-  {% if request.session.usertype != "Merchant" %}
+  {% if usertype != "Merchant" %}
   <a href="{% url 'addproduct' %}">Sell Product</a>  
   <a href="{% url 'nearby' %}">Near By Merchants</a>
   {% else %}
