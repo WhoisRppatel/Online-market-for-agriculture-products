@@ -3,9 +3,10 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h2>Report</h2>
+        <h2>Previous Deals</h2>
     </div>
   </div>
+  {% if deals %}
 <table id="customers">
     <tr>
             <th>ProductName</th>
@@ -29,4 +30,7 @@
 </tr>
 {% endfor %}  
 </table>
+{% else%}
+No Previous Deals exist
+{% endif %}
 {% endblock %}

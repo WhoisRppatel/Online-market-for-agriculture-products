@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^report/$', report,name='report'),
     url(r'^review/$', review,name='review'),
     url(r'^addreview/$', addreview,name='addreview'),
-    
+    url(r'^deal/$', deal,name='deal'),
+    url(r'^adddeal/$', adddeal,name='adddeal'),
 ]
