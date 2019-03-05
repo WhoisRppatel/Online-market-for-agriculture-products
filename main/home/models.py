@@ -12,7 +12,7 @@ class Product(models.Model):
     category=models.CharField(max_length=30,null=True)
     description=models.CharField(max_length=100,null=True)
     price=models.IntegerField()
-    pic_path=models.ImageField(upload_to = 'images/' , default='/nothing')
+    pic_path=models.ImageField(upload_to = 'login/static/images/' , default='/nothing')
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name='owner_name')
     status=models.BooleanField(default=False)
     quantity=models.FloatField(default=1.0)

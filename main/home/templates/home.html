@@ -7,7 +7,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
+
 		<link rel="stylesheet" href="{% static "css/style.css" %}">
 		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
 		<script src="{% static "js/materialize.min.js" %}"></script>
@@ -79,40 +80,35 @@ body {
 					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
 				</ul>
       </nav>
-    {% if usertype %}
-      {% if usertype != "Merchant" %}
+    {% if usertype1 %}
+    {% elif M1 %}
+    {% elif C1 %}
+    {% elif usertype != "Merchant" %}
 			<div class="abc">
           <h4>Welcome Farmer</h4>
       </div>
-      {% else %}
+    {% else %}
       <div class="abc2">
         <h4>Welcome Merchant</h4>
     </div>
     {% endif %}
-    {% endif %}
-    {% if usertype1 %}
-        {%block content %}
-   
-        {%endblock %}
-    {% endif %}
+    
+    {% block content %}
+           
+    {% endblock %}
+    
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="{% url 'today' %}">Today's Market</a>
-  {% if usertype and usertype != "Merchant" %}
-  <a href="{% url 'addproduct' %}">Sell Product</a>
-  {% elif usertype1 and usertype1 != "Merchant" %}
+  {% if usertype != "Merchant" %}
   <a href="{% url 'addproduct' %}">Sell Product</a>  
+  <a href="{% url 'nearby' %}">Near By Merchants</a>
   {% else %}
   <a href="{% url 'addproduct' %}">Buy Product</a>
-  {% endif %}
-  {% if usertype and usertype != "Merchant"  %}
-  <a href="{% url 'nearby' %}">Near By Merchants</a>
-  {% elif usertype1 and usertype1 != "Merchant"  %}
-  <a href="{% url 'nearby' %}">Near By Merchants</a>
-  {% else %}
   <a href="{% url 'nearby' %}">Near By Farmers</a>
   {% endif %}
-  <a href="{% url 'report' %}">Generate Report</a>
+  <a href="{% url 'report' %}">Previous Deals</a>
+  <a href="{% url 'chat' %}">Chat</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
 <script>
