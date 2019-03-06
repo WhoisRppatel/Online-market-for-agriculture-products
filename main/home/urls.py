@@ -15,5 +15,9 @@ urlpatterns = [
     url(r'^today/$', today,name='today'),
     url(r'^viewproducts/updateprice/(?P<product_id>\d+)$', updateprice,name='updateprice'),
     url(r'^viewproducts/$', viewproducts,name='viewproducts'),
-    
+    url(r'^report/$', report,name='report'),
+    url(r'^review/$', review,name='review'),
+    url(r'^addreview/$', addreview,name='addreview'),
+    url(r'^deal/$', deal,name='deal'),
+    url(r'^adddeal/$', adddeal,name='adddeal'),
 ]

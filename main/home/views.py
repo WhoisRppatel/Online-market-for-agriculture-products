@@ -19,6 +19,7 @@ def loggedin(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
     request.session["usertype"]=s.usertype
+    request.session["uid"]=s.id
     print(s.usertype)
     return render_to_response('home.html', {"usertype": s.usertype})
 
@@ -37,6 +38,12 @@ def addproductprice(request):
     return render_to_response('addproductprice.html',c)
 
 def newproduct(request):
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
+    c = {}
+    c.update(csrf(request))
+    c.update({"usertype": s.usertype})
     name = request.POST.get('name', '')
     category = request.POST.get('category', '')
     description = request.POST.get('description', '')
@@ -49,13 +56,13 @@ def newproduct(request):
         if form.is_valid():
             p.pic_path = form.cleaned_data['picture']
             p.save()
-            return render_to_response('home.html')
+            return render_to_response('home.html',c)
         else:
             p.save()
-            return render_to_response('home.html')
+            return render_to_response('home.html',c)
     else:
         print("adfsvkhdbmhefsy")
-        return render_to_response('home.html')
+        return render_to_response('home.html',c)
 
 def addprice(request):
     c={}
@@ -105,6 +112,8 @@ def updateprice(request,product_id):
     print(market)
     return redirect('viewproducts')
 def nearby(request):
+    c={}
+    c.update(csrf(request))
     Ans=[]
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -130,5 +139,94 @@ def nearby(request):
             for j in p:
                 if j.name in Q:
                     Ans.append(j)
-    print(Ans)                
-    return render_to_response('nearby.html', {"usertype1": s.usertype,"L":Ans})
+    print(Ans)
+    c.update({"usertype": s.usertype,"L":Ans})                
+    return render_to_response('nearby.html',c)
+
+
+def report(request):
+    c={}
+    c.update(csrf(request))
+    if(request.session["uid"]):
+        uid=request.session["uid"]
+    #if(request.session["usertype"] == "Merchant"):
+    deals=Deal.objects.filter(buyer=uid)
+    c.update({"deals":deals})
+    #print(c)
+    return render_to_response('report.html',c)
+
+def review(request):
+    to_user=request.POST.get('to_user','')
+    to_user=User.objects.get(id=to_user)
+    print(to_user.username)
+    deal_id=request.POST.get('deal_id','')
+    #print(to_user.username)
+    c={}
+    c.update(csrf(request))
+    c.update({'to_user':to_user})
+    c.update({'deal_id':deal_id})
+    try:
+        prev_review=Review.objects.get(deal_id=deal_id)
+        c.update({'prev_review':prev_review})
+    except:
+        pass
+    return render_to_response('review.html',c)
+
+def addreview(request):
+    title=request.POST.get('title','')
+    rating=request.POST.get('rating','')
+    text=request.POST.get('text','')
+    from_user=request.session["uid"]
+    to_user=request.POST.get('to_user','')
+    deal_id=request.POST.get('deal_id','')
+    to_user=User.objects.get(id=to_user)
+    print(deal_id)
+    from_user=User.objects.get(id=from_user)
+    deal=Deal.objects.get(id=deal_id)
+    time=datetime.now()
+    try:
+        prev_review=Review.objects.get(deal_id=deal_id)
+        prev_review.delete()
+    except:
+        print("In exception")
+    finally:
+        r=Review(title=title,rating=rating,text=text,from_user=from_user,to_user=to_user,time=time,deal_id=deal)
+        r.save()
+    return redirect('report')
+
+def deal(request):
+    c={}
+    c.update(csrf(request))
+    prod=request.POST.get('productId','')
+    prod=Product.objects.get(id=prod)
+    uid=request.user
+    c.update({'prod':prod})
+    c.update({'uid':uid})
+    return render_to_response('adddeal.html',c)
+
+def adddeal(request):
+    c={}
+    c.update(csrf(request))
+    prod=request.POST.get('productId','')
+    prod=Product.objects.get(id=prod)
+    user=request.user
+    price=request.POST.get('price','')
+    quantity=request.POST.get('quantity','')
+    quantity=int(quantity)
+    print(prod.status)
+    if(prod.status == False):
+        if(prod.quantity > quantity):
+            prod.quantity = prod.quantity - quantity
+            print("PATH 1------------------")
+        else:
+            prod.status=True
+            prod.quantity=0
+            print(prod.status)
+            print("PATH 2------------------")
+        prod.save()
+    else:
+        print("PATH 3------------------")
+        return redirect('nearby')
+    deal=Deal(product_id=prod,buyer=user,price_sold=price,quantity_sold=quantity,time=datetime.now())
+    deal.save()
+    return redirect('nearby')

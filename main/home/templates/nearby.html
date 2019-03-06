@@ -102,22 +102,26 @@ function fun(ownerName){
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Expected Price</th>
-            {% if usertype1 == "Merchant" %}
+            {% if usertype == "Merchant" %}
             <th>View</th>
             {% endif %}
     </tr>
 {% for ob in L %}  
+{% if not ob.status %}
 <tr>
 <td>{{ ob.owner.first_name }}</td>
 <td>{{ ob.name }}</td>
 <td>{{ ob.quantity }}</td>
 <td>{{ ob.price }}</td>
-{% if usertype1 == "Merchant" %}
+
+<td><a href="{% url 'chatme' ob.owner %}">Chat</a></td>
+{% if usertype == "Merchant" %}
 <td><a href="#" onclick="fun({{ob.owner.username}})">View</a></td>
 <img id="{{ob.owner.username}}" style="display: none;" class="materialboxed" width="650" src="{{ baseUrl }}{{ob.pic_path}}" %}">
+<td><form method="POST" action="{% url 'deal' %}"> {% csrf_token %} <input type="hidden" name="productId" value="{{ob.id}}"/><input type="submit" value="Buy"></button></form></td>
 {% endif %}
-<td><a href="{% url 'chatme' ob.owner %}">Chat</a></td>
 </tr>
+{% endif %}
 {% endfor %}  
 </table>
     
@@ -131,6 +135,7 @@ function fun(ownerName){
   <a href="{% url 'addproduct' %}">Buy Product</a>
   <a href="{% url 'nearby' %}">Near By Farmers</a>
   {% endif %}
+  <a href="{% url 'report' %}">Previous Deals</a>
   <a href="{% url 'chat' %}">Chat</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
