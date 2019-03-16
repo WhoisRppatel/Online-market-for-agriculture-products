@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.contrib import messages
-from login.models import UserInfo
+from login.models import *
 from home.models import *
 from datetime import datetime
 
@@ -98,16 +98,16 @@ def updateprice(request,product_id):
     c={}
     c.update(csrf(request))
     print(product_id)
-    min=request.POST.get('lmin','')
-    max=request.POST.get('lmax','')
+    mina=request.POST.get('lmin','')
+    maxa=request.POST.get('lmax','')
     #print(min)
     #print(max)
     #print("Hello")
     market=Market.objects.get(id=product_id)
-    if (min != '') & (max != '') & (min.isnumeric() & min.isnumeric()):
-        if(int(min) < int(max)):
-            market.minprice=min
-            market.maxprice=max
+    if (mina != '') & (maxa != '') & (mina.isnumeric() & mina.isnumeric()):
+        if(int(mina) < int(maxa)):
+            market.minprice=mina
+            market.maxprice=maxa
             market.save()
     print(market)
     return redirect('viewproducts')
@@ -145,12 +145,14 @@ def nearby(request):
 
 
 def report(request):
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
     c={}
     c.update(csrf(request))
-    if(request.session["uid"]):
-        uid=request.session["uid"]
-    #if(request.session["usertype"] == "Merchant"):
-    deals=Deal.objects.filter(buyer=uid)
+    if s.usertype== "Merchant":
+        deals=Deal.objects.filter(buyer=s.userid,status=True)
+    else:
+        deals=Deal.objects.filter(seller=s.userid,status=True)
     c.update({"deals":deals})
     #print(c)
     return render_to_response('report.html',c)
@@ -167,14 +169,18 @@ def review(request):
     c.update({'deal_id':deal_id})
     try:
         prev_review=Review.objects.get(deal_id=deal_id)
+        print(prev_review)
         c.update({'prev_review':prev_review})
     except:
+        print("error")
         pass
     return render_to_response('review.html',c)
 
 def addreview(request):
+    prevrate=0
     title=request.POST.get('title','')
     rating=request.POST.get('rating','')
+    rating=int(rating)
     text=request.POST.get('text','')
     from_user=request.session["uid"]
     to_user=request.POST.get('to_user','')
@@ -186,11 +192,21 @@ def addreview(request):
     time=datetime.now()
     try:
         prev_review=Review.objects.get(deal_id=deal_id)
+        prevrate=prev_review.rating
         prev_review.delete()
     except:
         print("In exception")
     finally:
         r=Review(title=title,rating=rating,text=text,from_user=from_user,to_user=to_user,time=time,deal_id=deal)
+        U=UserRating.objects.get(userid=to_user)
+        print(U)
+        t=rating-prevrate
+        print(t,U.totalrating)
+        U.totalrating=t+U.totalrating
+
+        if prevrate==0:
+            U.totalcount+=1
+        U.save()    
         r.save()
     return redirect('report')
 
@@ -213,20 +229,42 @@ def adddeal(request):
     price=request.POST.get('price','')
     quantity=request.POST.get('quantity','')
     quantity=int(quantity)
-    print(prod.status)
-    if(prod.status == False):
-        if(prod.quantity > quantity):
-            prod.quantity = prod.quantity - quantity
-            print("PATH 1------------------")
-        else:
-            prod.status=True
-            prod.quantity=0
-            print(prod.status)
-            print("PATH 2------------------")
-        prod.save()
-    else:
-        print("PATH 3------------------")
-        return redirect('nearby')
-    deal=Deal(product_id=prod,buyer=user,price_sold=price,quantity_sold=quantity,time=datetime.now())
+    deal=Deal(product_id=prod,buyer=user,seller=prod.owner,status=False,price_sold=price,quantity_sold=quantity,time=datetime.now())
     deal.save()
     return redirect('nearby')
+
+def requestdeal(request):
+    c={}
+    c.update(csrf(request))
+    deal=Deal.objects.filter(seller=request.user,status=False)
+    c.update({"Deal":deal})
+    return render_to_response('requestdeal.html',c)
+
+def approve(requset,id):
+    deal=Deal.objects.get(id=id)
+    prod=Product.objects.get(id=deal.product_id.id)
+    if prod.quantity < deal.quantity_sold :
+        deal.delete()
+    elif prod.quantity==deal.quantity_sold :
+        deal.status=True
+        prod.quantity=0
+        prod.status=True
+        prod.save()
+        deal.save()
+    else:
+        prod.quantity=prod.quantity-deal.quantity_sold
+        prod.save()
+        deal.status=True
+        deal.save()
+    return redirect('requestdeal')
+def decline(request,id):
+    deal=Deal.objects.get(id=id)
+    deal.delete()       
+    return redirect('requestdeal')
+
+def pendingdeal(request):
+    c={}
+    c.update(csrf(request))
+    deal=Deal.objects.filter(buyer=request.user,status=False)
+    c.update({"Deal":deal})
+    return render_to_response('pendingdeal.html',c)    

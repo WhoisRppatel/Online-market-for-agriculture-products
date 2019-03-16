@@ -8,3 +8,9 @@ class UserInfo(models.Model):
     mob = models.IntegerField()
     usertype=models.CharField(max_length=10,default="Farmer")
 # Create your models here.
+
+class UserRating(models.Model):
+    userid = models.OneToOneField(User,on_delete=models.CASCADE)
+    totalrating=models.IntegerField()
+    totalcount=models.IntegerField()
+    

@@ -78,7 +78,7 @@ body {
               {% csrf_token %}
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="textarea2" name="message" class="materialize-textarea" data-length="120"></textarea>
+                <textarea id="textarea2" name="message" required class="materialize-textarea" data-length="120"></textarea>
                 <label for="textarea2">Type message...</label>
                 <button class="btn waves-effect waves-light" type="submit" name="action">Send
                   <i class="material-icons right">send</i>
@@ -89,7 +89,7 @@ body {
         </div>
         <script>
             // $(window).load(function(){
-              console.log("sdfas");
+              //console.log("sdfas");
               setInterval(function(){
                 $('#messages').load("/home/load_messages/{{ SP }}");
               }, 1000);

@@ -32,11 +32,9 @@ def LoadMessages(request,username):
     U=User.objects.get(username=username)
     SS=U.first_name
     SP=U.username
-    print(" error ")
     M=Message.objects.filter(sender=current ,receiver=U) 
     M=M | Message.objects.filter(sender=U ,receiver=current)
     M=M.order_by('id')
-    print("error 2")
     c = {}
     c.update(csrf(request))
     c.update({"M1": M})

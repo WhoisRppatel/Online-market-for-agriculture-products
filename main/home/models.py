@@ -29,9 +29,11 @@ class Market(models.Model):
 class Deal(models.Model):
     product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
     buyer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='buyer_name')
+    seller=models.ForeignKey(User,on_delete=models.CASCADE,related_name='seller_name',null=True)
     price_sold=models.IntegerField()
     quantity_sold=models.FloatField(default=1.0)
     time=models.DateTimeField()
+    status=models.BooleanField(default=False,null=True)
 
 class Review(models.Model):
     rating=models.IntegerField()

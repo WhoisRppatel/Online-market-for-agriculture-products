@@ -68,8 +68,10 @@ def signup(request):
         if len(mob)==10 and (mob.isdigit()==True):
             s = User.objects.create_user(username=unm, password=pas, email=email,first_name=name)
             p = UserInfo(userid=s,name=name,mob=mob,city=city,usertype=typeis)
+            d = UserRating(userid=s,totalrating=0,totalcount=0)
             s.save()
             p.save()
+            d.save()
             return HttpResponseRedirect('/login/login/')
         else:
             messages.warning(request, 'Enter Valid Mobile Number')

@@ -1,5 +1,5 @@
 {% load static %}
-
+{% static "" as baseUrl %}
 <html>
 	<head>
 		<title>{% block title %}Home{% endblock %} | OMAP</title>
@@ -80,22 +80,24 @@ body {
 					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
 				</ul>
       </nav>
-    {% if usertype1 %}
-    {% elif M1 %}
-    {% elif C1 %}
-    {% elif usertype != "Merchant" %}
-			<div class="abc">
-          <h4>Welcome Farmer</h4>
-      </div>
-    {% else %}
-      <div class="abc2">
-        <h4>Welcome Merchant</h4>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Requested Deals</h2>
     </div>
-    {% endif %}
-    
-    {% block content %}
-           
-    {% endblock %}
+</div>
+<div>
+    {% for d in Deal %}
+        <tr>
+            <td>{{ d.product_id.name }}</td>
+            <td>{{ d.seller.first_name }}</td>
+            <td>{{ d.quantity_sold }}</td>
+            <td>{{ d.price_sold }}</td>
+            <td>
+                <a href="#" class="btn btn-info" role="button">Reminder</a>
+            </td>
+            </tr>
+    {% endfor %}
+</div>
     
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -107,10 +109,8 @@ body {
   {% else %}
   <a href="{% url 'addproduct' %}">Buy Product</a>
   <a href="{% url 'nearby' %}">Near By Farmers</a>
-  <a href="{% url 'pendingdeal' %}">Pending Deals</a>
   {% endif %}
   <a href="{% url 'report' %}">Previous Deals</a>
-
   <a href="{% url 'chat' %}">Chat</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
