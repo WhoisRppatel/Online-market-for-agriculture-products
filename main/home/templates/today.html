@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-        {% load static %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static "css/style.css" %}">
+{% extends 'base2.html' %}
+{% block content %}
+{% load static %}
+        
 <style>
 #customers {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -68,5 +66,4 @@
 {% endfor %}
 </table>
 <a href="{% url 'loggedin' %}" class="btn btn-info" role="button" >Back to Home</a>
-</body>
-</html>
+{% endblock %}

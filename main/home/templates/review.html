@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base2.html' %}
+{% block content %}
+
         <title>{% block title %}Add Review{% endblock %} | OMAP</title>
         {% load static %}
 		<!--<link rel="icon" href="imageset/favicon.png">-->
@@ -179,5 +179,5 @@ function responseMessage(msg) {
           </div></form>
          </div>     
          <a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>               
-</body>
-</html>
+
+         {% endblock %}

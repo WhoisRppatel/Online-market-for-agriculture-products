@@ -77,22 +77,14 @@ body {
 		<!-- Nav -->
 			<nav id="menu" style="background-color: rgb(92, 92, 233);">
 				<ul class="links">
-					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
-				</ul>
+          <li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
+          <li><a href="{% url 'loggedin' %}">Home</a></li>
+        </ul>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li style="align : left;"><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
       </nav>
-    {% if usertype1 %}
-    {% elif M1 %}
-    {% elif C1 %}
-    {% elif deals %}
-    {% elif usertype != "Merchant" %}
-			<div class="abc">
-          <h4>Welcome Farmer</h4>
-      </div>
-    {% else %}
-      <div class="abc2">
-        <h4>Welcome Merchant</h4>
-    </div>
-    {% endif %}
     
     {% block content %}
            

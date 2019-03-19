@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import UserInfo
+from .models import UserInfo,UserRating
 from .forms import SignUpForm
 
 # Create your views here.
@@ -94,8 +94,15 @@ def signup(request):
             return HttpResponseRedirect('/login/login/')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})"""
 
-
-    """ 
    
+def profile(request):
+    c={}
+    c.update(csrf(request))
+    user=request.user
+    userinfo=UserInfo.objects.get(userid=user)
+    c.update({"uinfo":userinfo})
+    rating=UserRating.objects.get(userid=user)
+    c.update({"rating":rating})
+    return render_to_response('profile.html',c)

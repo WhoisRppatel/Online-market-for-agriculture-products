@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^auth/$', auth_view),
     url(r'^logout/$', logout,name='logout'),
     url(r'^invalidlogin/$', invalidlogin),
+    url(r'^profile/$',profile,name="profile"),
     url(r'^$', login),
 
 ]
