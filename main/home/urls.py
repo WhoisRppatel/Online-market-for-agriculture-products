@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^approve/(?P<id>\d+)$', approve,name='approve'),
     url(r'^decline/(?P<id>\d+)$', decline,name='decline'),
     url(r'^adddeal/$', adddeal,name='adddeal'),
+    url(r'^sortby/(?P<mycity>\w+)$', sortby,name='sortby'),
 ]
