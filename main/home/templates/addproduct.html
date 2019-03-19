@@ -1,66 +1,90 @@
 {% extends 'base2.html' %}
 {% block content %}
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!--link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag -------->
-
-<form class="form-horizontal" action="/home/newproduct/" enctype="multipart/form-data" method="POST">
+<---- Include the above in your HEAD tag -------->
+<div class="row" style="width:55%;">
+<form class="col s12" action="/home/newproduct/" enctype="multipart/form-data" method="POST">
   {% csrf_token %}
   <fieldset>
 
-<legend>PRODUCTS</legend>
+<h1>PRODUCTS</h1>
 
 <!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="name">PRODUCT NAME</label>  
-  <div class="col-md-4">
+<div class="row">
+<div class="input-field col s6">
   <input name="name"  class="form-control input-md" required="" type="text">
+  <label for="name">PRODUCT NAME</label>  
 </div>
 </div>
 
 
 
 <!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="category">PRODUCT CATEGORY</label>
-  <div class="col-md-4">
+<div class="row">
+  <div  class="input-field col s6">
+    
+  <div class="input-field col s12">
     <select name="category" class="form-control">
         <option value="Grains">Grains</option>
         <option value="Vegetables">Vegetables</option>
         <option value="Fruits">Fruits</option>
         <option value="Pulses">Pulses</option>
     </select>
+    <label for="category">PRODUCT CATEGORY</label>
+  </div>
   </div>
 </div>
 
-<div class="form-group">
-  <label class="col-md-4 control-label" for="description">PRODUCT DESCRIPTION</label>
-  <div class="col-md-4">                     
-    <textarea class="form-control" name="description"></textarea>
-  </div>
+
+  
+      <div class="row">
+        <div class="input-field col s12">
+        <textarea class="materialize-textarea" name="description"></textarea>
+    <label for="description">PRODUCT DESCRIPTION</label>
+    </div>
+
+
 </div>
 {% if usertype != "Merchant" %}
-<div class="form-group">
-    <label class="col-md-4 control-label" for="picture">PRODUCT PICTURE</label>
-    <div class="col-md-4">                     
-      <input class="form-control" type="file" name="picture" required/>
+<!--div class="row">
+    <div class="input-field col s6">                  
+      <input class="file-field input-field" type="file" name="picture" required/>
+      <label for="picture">PRODUCT PICTURE</label>
+    </div>
+  </div-->
+<div class="row"> <label>PRODUCT PICTURE</label>
+  <div class="file-field input-field">
+     
+      <div class="btn">
+        <span>Upload Picture</span>
+        <input type="file" name="picture" required/>
+        
+      </div>
+      <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+         
+        </div>
     </div>
   </div>
+
+  
+
 {% endif %}
 <!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="quantity">QUANTITY</label>  
-  <div class="col-md-4">
+<div class="row">
+    <div class="input-field col s6">                  
   <input name="quantity"  class="form-control input-md" required="" type="text">
+  <label for="quantity">QUANTITY (IN KILOGRAMS)</label>  
 </div>
 </div>
 {% if usertype != "Merchant" %}
-<div class="form-group">
-    <label class="col-md-4 control-label" for="price">EXPECTED PRICE</label>
-    <div class="col-md-4">                     
-      <input name="price"  class="form-control input-md" required="" type="text">
+<div class="row">
+    <div class="input-field col s6">           
+        <input name="price"  class="form-control input-md" required="" type="text">
+      <label class="col-md-4 control-label" for="price">EXPECTED PRICE (IN RUPEES)</label>
     </div>
   </div>
 {% else %}
@@ -83,5 +107,6 @@
 
 </fieldset>
 </form>
+</div>
 <a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>
 {% endblock %}
