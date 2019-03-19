@@ -105,4 +105,11 @@ def profile(request):
     c.update({"uinfo":userinfo})
     rating=UserRating.objects.get(userid=user)
     c.update({"rating":rating})
+    star=0
+    try:
+        star=rating.totalrating/rating.totalcount
+    except:
+        #0 rating
+        pass
+    c.update({"star":star})
     return render_to_response('profile.html',c)
