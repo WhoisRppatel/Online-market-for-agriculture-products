@@ -147,9 +147,12 @@ def nearby(request):
 def report(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
-    c={}
+    request.session["usertype"]=s.usertype
+    c = {}
     c.update(csrf(request))
-    if s.usertype== "Merchant":
+    c.update({"usertype": s.usertype})
+    c.update(csrf(request))
+    if s.usertype == "Merchant":
         deals=Deal.objects.filter(buyer=s.userid,status=True)
     else:
         deals=Deal.objects.filter(seller=s.userid,status=True)
@@ -158,17 +161,32 @@ def report(request):
     return render_to_response('report.html',c)
 
 def review(request):
-    to_user=request.POST.get('to_user','')
-    to_user=User.objects.get(id=to_user)
-    print(to_user.username)
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
+    c = {}
+    c.update(csrf(request))
+    c.update({"usertype": s.usertype})
+    seller=request.POST.get('seller','')
+    buyer=request.POST.get('buyer','')
+    seller=User.objects.get(id=seller)
+    buyer=User.objects.get(id=buyer)
+    #print(to_user.username)
     deal_id=request.POST.get('deal_id','')
     #print(to_user.username)
-    c={}
     c.update(csrf(request))
-    c.update({'to_user':to_user})
+    c.update({'seller': seller})
+    c.update({'buyer': buyer})
     c.update({'deal_id':deal_id})
+    if s.usertype == "Merchant":
+        c.update({"to_user":seller})
+    else:
+        c.update({"to_user":buyer})
     try:
-        prev_review=Review.objects.get(deal_id=deal_id)
+        if s.usertype == "Merchant":
+            prev_review=Review.objects.get(deal_id=deal_id,from_user=buyer.id )
+        else:
+           prev_review=Review.objects.get(deal_id=deal_id,from_user=seller.id ) 
         print(prev_review)
         c.update({'prev_review':prev_review})
     except:
@@ -182,16 +200,16 @@ def addreview(request):
     rating=request.POST.get('rating','')
     rating=int(rating)
     text=request.POST.get('text','')
-    from_user=request.session["uid"]
+    from_user=request.user
     to_user=request.POST.get('to_user','')
     deal_id=request.POST.get('deal_id','')
     to_user=User.objects.get(id=to_user)
     print(deal_id)
-    from_user=User.objects.get(id=from_user)
+    from_user=User.objects.get(id=from_user.id)
     deal=Deal.objects.get(id=deal_id)
     time=datetime.now()
     try:
-        prev_review=Review.objects.get(deal_id=deal_id)
+        prev_review=Review.objects.get(deal_id=deal_id,to_user_id=to_user.id)
         prevrate=prev_review.rating
         prev_review.delete()
     except:
@@ -211,7 +229,12 @@ def addreview(request):
     return redirect('report')
 
 def deal(request):
-    c={}
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
+    c = {}
+    c.update(csrf(request))
+    c.update({"usertype": s.usertype})
     c.update(csrf(request))
     prod=request.POST.get('productId','')
     prod=Product.objects.get(id=prod)
@@ -234,7 +257,12 @@ def adddeal(request):
     return redirect('nearby')
 
 def requestdeal(request):
-    c={}
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
+    c = {}
+    c.update(csrf(request))
+    c.update({"usertype": s.usertype})
     c.update(csrf(request))
     deal=Deal.objects.filter(seller=request.user,status=False)
     c.update({"Deal":deal})
@@ -264,6 +292,11 @@ def decline(request,id):
 
 def pendingdeal(request):
     c={}
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    request.session["usertype"]=s.usertype
+    c.update(csrf(request))
+    c.update({"usertype": s.usertype})
     c.update(csrf(request))
     deal=Deal.objects.filter(buyer=request.user,status=False)
     c.update({"Deal":deal})

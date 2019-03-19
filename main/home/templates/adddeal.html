@@ -1,3 +1,5 @@
+{% extends 'base2.html' %}
+{% block content %}
 {% csrf_token %}
 
 <!DOCTYPE html>
@@ -60,3 +62,4 @@
          <a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>               
 </body>
 </html>
+{% endblock %}

@@ -1,4 +1,4 @@
-
+{% extends 'base2.html' %}
 {% block content %}
 
 <div class="row">
@@ -7,12 +7,13 @@
     </div>
   </div>
   {% if deals %}
-<table id="customers">
+<table class="striped">
     <tr>
             <th>ProductName</th>
             <th>Seller Name</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th></th>
     </tr>
 {% for d in deals %}  
 <tr>
@@ -22,15 +23,18 @@
 <td>{{ d.price_sold }}</td>
 <td><form action="{% url 'review' %}" method="POST">
     {% csrf_token %}
-    <input type="hidden" value="{{ d.product_id.owner.id }}" name="to_user"/>
+    <input type="hidden" value="{{ d.seller_id }}" name="seller"/>
+    <input type="hidden" value="{{ d.buyer_id }}" name="buyer"/>
     <input type="hidden" value="{{ d.id }}" name="deal_id"/>
-    <input value="Give review" type="submit" >
+    <input value="Give review" type="submit" class="btn btn-success" >
 </form>
 </td>
 </tr>
 {% endfor %}  
 </table>
 {% else%}
-No Previous Deals exist
+<div class="card-panel red lighten-3" style="align-self: center;width: 100%;" ><h6>No Previous Deals exist</h6></div>
+
+
 {% endif %}
 {% endblock %}

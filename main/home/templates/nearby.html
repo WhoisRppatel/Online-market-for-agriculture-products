@@ -1,3 +1,5 @@
+{% extends 'base2.html' %}
+{% block content %}
 {% load static %}
 {% static "" as baseUrl %}
 <html>
@@ -75,7 +77,7 @@ body {
 </head>
 	<body class="is-preload">
 		<!-- Nav -->
-			<nav id="menu" style="background-color: rgb(92, 92, 233);">
+			<!--nav id="menu" style="background-color: rgb(92, 92, 233);">
 				<ul class="links">
 					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
 				</ul>
@@ -90,7 +92,7 @@ function fun(ownerName){
     $('#'+ownerName.id).trigger('click');
     $('#'+ownerName.id).css('display', 'inline-block');
 }
-</script>
+</script-->
 <div class="row">
     <div class="col-md-6">
         <h2>Intersted Persons</h2>
@@ -117,7 +119,7 @@ function fun(ownerName){
 <td><a href="{% url 'chatme' ob.owner %}">Chat</a></td>
 {% if usertype == "Merchant" %}
 <td><a href="#" onclick="fun({{ob.owner.username}})">View</a></td>
-<img id="{{ob.owner.username}}" style="display: none;" class="materialboxed" width="650" src="{{ baseUrl }}{{ob.pic_path}}" %}">
+<img id="{{ob.owner.username}}" style="display: none;" class="materialboxed" width="650" src="{{ baseUrl }}{{ob.pic_path}}" %}>
 <td><form method="POST" action="{% url 'deal' %}"> {% csrf_token %} <input type="hidden" name="productId" value="{{ob.id}}"/><input type="submit" value="Buy"></button></form></td>
 {% endif %}
 </tr>
@@ -125,7 +127,7 @@ function fun(ownerName){
 {% endfor %}  
 </table>
     
-<div id="mySidenav" class="sidenav">
+<!--div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="{% url 'today' %}">Today's Market</a>
   {% if usertype != "Merchant" %}
@@ -147,6 +149,7 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
-</script>
+</script-->
 	</body>
 </html>
+{% endblock %}
