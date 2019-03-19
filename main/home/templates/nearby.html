@@ -2,86 +2,6 @@
 {% block content %}
 {% load static %}
 {% static "" as baseUrl %}
-<html>
-	<head>
-		<title>{% block title %}Home{% endblock %} | OMAP</title>
-		<!--<link rel="icon" href="imageset/favicon.png">-->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
-
-		<link rel="stylesheet" href="{% static "css/style.css" %}">
-		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
-		<script src="{% static "js/materialize.min.js" %}"></script>
-		<script src="{% static "js/script.js" %}"></script>
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-.abc{
-          
-          background-image: url("{% static 'home/farmer.jpg'%}");
-          background-size: cover;
-          background-repeat: no-repeat;
-          height: 100%;
-          font-family: 'Numans', sans-serif;
-	}
-.abc2{
-          
-          background-image: url("{% static 'home/buy.jpeg'%}");
-          background-size: cover;
-          background-repeat: no-repeat;
-          height: 100%;
-          font-family: 'Numans', sans-serif;
-}  
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #0001f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
-</head>
-	<body class="is-preload">
-		<!-- Nav -->
-			<!--nav id="menu" style="background-color: rgb(92, 92, 233);">
-				<ul class="links">
-					<li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
-				</ul>
-      </nav>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         $('.materialboxed').materialbox();
@@ -89,23 +9,29 @@ body {
 
 function fun(ownerName){
     console.log(ownerName);
-    $('#'+ownerName.id).trigger('click');
-    $('#'+ownerName.id).css('display', 'inline-block');
+    $('#'+ownerName).trigger('click');
+    $('#'+ownerName).css('display', 'inline-block');
 }
-</script-->
+</script>
 <div class="row">
     <div class="col-md-6">
-        <h2>Intersted Persons</h2>
+        <h2 class="center">Intersted Persons</h2>
     </div>
   </div>
-<table id="customers">
+<table id="customers" class="bordered centered striped highlight  lighten-3">
     <tr>
-            <th>Name</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Expected Price</th>
+            <th class="center">Name</th>
+            <th class="center">Product Name</th>
+            <th class="center">Quantity</th>
+            <th class="center">Expected Price</th>
             {% if usertype == "Merchant" %}
-            <th>View</th>
+            <th class="center"></th>
+            <th class="center">View</th>
+            <th class="center"></th>
+            {% else %}
+            <th class="center"></th>
+            <th class="center">/th>
+            <th class="center"></th>
             {% endif %}
     </tr>
 {% for ob in L %}  
@@ -116,40 +42,15 @@ function fun(ownerName){
 <td>{{ ob.quantity }}</td>
 <td>{{ ob.price }}</td>
 
-<td><a href="{% url 'chatme' ob.owner %}">Chat</a></td>
+<td><a class="btn pink" href="{% url 'chatme' ob.owner %}">Chat</a></td>
 {% if usertype == "Merchant" %}
-<td><a href="#" onclick="fun({{ob.owner.username}})">View</a></td>
-<img id="{{ob.owner.username}}" style="display: none;" class="materialboxed" width="650" src="{{ baseUrl }}{{ob.pic_path}}" %}>
-<td><form method="POST" action="{% url 'deal' %}"> {% csrf_token %} <input type="hidden" name="productId" value="{{ob.id}}"/><input type="submit" value="Buy"></button></form></td>
+<td><a href="#" class="btn green" onclick="fun({{ ob.id }})">View</a></td>
+<img id="{{ ob.id }}" style="display: none;" class="materialboxed" width="650" src="/{{ob.pic_path}}" >
+<td><form method="POST" action="{% url 'deal' %}"> {% csrf_token %} <input type="hidden" name="productId" value="{{ob.id}}"/><input class="btn" type="submit" value="Buy"></button></form></td>
 {% endif %}
 </tr>
 {% endif %}
 {% endfor %}  
 </table>
-    
-<!--div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="{% url 'today' %}">Today's Market</a>
-  {% if usertype != "Merchant" %}
-  <a href="{% url 'addproduct' %}">Sell Product</a>  
-  <a href="{% url 'nearby' %}">Near By Merchants</a>
-  {% else %}
-  <a href="{% url 'addproduct' %}">Buy Product</a>
-  <a href="{% url 'nearby' %}">Near By Farmers</a>
-  {% endif %}
-  <a href="{% url 'report' %}">Previous Deals</a>
-  <a href="{% url 'chat' %}">Chat</a>
-  <a href="{% url 'logout' %}">Logout</a>
-</div>
-<script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
-</script-->
-	</body>
-</html>
 {% endblock %}

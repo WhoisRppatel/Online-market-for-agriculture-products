@@ -6,13 +6,15 @@
 		<!--<link rel="icon" href="imageset/favicon.png">-->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
-
-		<link rel="stylesheet" href="{% static "css/style.css" %}">
-		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
 		<script src="{% static "js/materialize.min.js" %}"></script>
-		<script src="{% static "js/script.js" %}"></script>
+		<script src="{% static "js/script.js" %}"></script>        
+
 <style>
 body {
   font-family: "Lato", sans-serif;
@@ -78,12 +80,14 @@ body {
 			<nav id="menu" style="background-color: rgb(92, 92, 233);">
 				<ul class="links">
           <li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
-          <li><a href="{% url 'loggedin' %}">Home</a></li>
+          <li><a href="{% url 'loggedin' %}" class="brand-logo center">OMAP</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li style="align : left;"><a href="{% url 'profile' %}">Profile</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-          </ul>
+          <li style="align : left;"><a href="{% url 'profile' %}">
+            <i class="material-icons " style="font-size:40px">person</i>
+                  </a></li>
+          <li><a href="{% url 'logout' %}"><i class="material-icons " style="font-size:40px">subdirectory_arrow_right</i></a></li>
+      </ul>
       </nav>
     
     {% block content %}

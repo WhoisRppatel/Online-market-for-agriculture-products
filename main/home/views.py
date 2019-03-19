@@ -83,10 +83,22 @@ def addprice(request):
 def today(request):
     c={}
     c.update(csrf(request))
-    M = Market.objects.all()
+    M = Market.objects.filter(city="Nadiad")
+    city =Market.objects.values("city").distinct()
     c.update({"M": M})
+    c.update({"city":city})
     return render_to_response('today.html',c)
 
+def sortby(request,mycity):
+    c={}
+    c.update(csrf(request))
+    M = Market.objects.filter(city=mycity)
+    city =Market.objects.values("city").distinct()
+    print(M,city)
+    print("fergthfyhtgf")
+    c.update({"M": M})
+    c.update({"city":city})
+    return render_to_response('today.html',c)
 def viewproducts(request):
     c={}
     c.update(csrf(request))
