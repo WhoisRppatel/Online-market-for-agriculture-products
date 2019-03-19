@@ -15,7 +15,11 @@ function fun(ownerName){
 </script>
 <div class="row">
     <div class="col-md-6">
-        <h2 class="center">Intersted Persons</h2>
+        {% if usertype == "Merchant" %}
+        <h2 class="center">Intersted Farmers</h2>
+        {% else %}
+        <h2 class="center">Intersted Merchants</h2>
+        {% endif %}
     </div>
   </div>
 <table id="customers" class="bordered centered striped highlight  lighten-3">
@@ -30,7 +34,7 @@ function fun(ownerName){
             <th class="center"></th>
             {% else %}
             <th class="center"></th>
-            <th class="center">/th>
+            <th class="center"></th>
             <th class="center"></th>
             {% endif %}
     </tr>

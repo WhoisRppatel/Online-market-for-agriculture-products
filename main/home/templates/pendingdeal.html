@@ -22,10 +22,9 @@
     <td>{{ d.seller.first_name }}</td>
     <td>{{ d.quantity_sold }}</td>
     <td>{{ d.price_sold }}</td>
-    <td>{{ d.product_id.price }}</td>
     <td></td>
     <td>
-        <a href="#" class="btn btn-info" role="button">Reminder</a>
+        <a href="#" class="btn btn-info" onclick="Materialize.toast('Reminder Successfully Sended to Farmer ', 2000)" role="button">Reminder</a>
     </td>
 </tr>
 {% endfor %}

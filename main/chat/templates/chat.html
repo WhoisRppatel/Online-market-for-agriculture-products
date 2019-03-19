@@ -1,15 +1,15 @@
 {% extends 'base2.html' %}
 {% block content %}
-
+<div class="container center" >
     <div class="row">
       <div class="col-md-6">
-         <h2>List of People</h2>
+         <h2 class="center">List of People</h2>
       </div>
     </div>
      {% for ob in C1 %}  
      <div class="collection " >
          <a href="{% url 'chatme' ob %}" class="collection-item w3-display-topright" style="color:rgb(28, 16, 71); "><h5>{{ ob.first_name }}</h5></a>
        </div>
-         <hr />
      {% endfor %}    
+ </div>    
 {% endblock %}

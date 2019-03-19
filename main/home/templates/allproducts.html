@@ -1,0 +1,35 @@
+{% extends 'base2.html' %}
+{% block content %}
+        
+<div class="row">
+        <div class="col-md-6">
+            <h2 class="center">All Products Details</h2>
+        </div>
+</div>
+     <div class="container" style="width:90%;">      
+      <table  id="customers" class="bordered centered striped highlight brown lighten-3">
+        <tr>
+                <th class="center">Product Name</th>
+                <th class="center">Category</th>
+                <th class="center">Description</th>
+                <th class="center">Quantity</th>
+                <th class="center">Expected Price</th>
+                <th class="center"></th>
+        </tr>
+{% for ob in P %}  
+  <tr>
+    <td>{{ ob.name }}</td>
+    <td>{{ ob.category }}</td>
+    <td>{{ ob.description }}</td>
+    <td>{{ ob.quantity }}</td>
+    <td>{{ ob.price }}</td>
+    <td><a href="{% url 'remove' ob.id %}" class="btn red" role="button" >Remove</a></td>
+</tr>
+{% endfor %}
+</table>
+</div>
+<br/>
+<div class="row center">     
+    <a href="{% url 'loggedin' %}" class="btn btn-info" role="button" >Back to Home</a>
+</div>
+{% endblock %}

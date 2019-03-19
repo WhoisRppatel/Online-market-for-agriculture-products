@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import UserInfo,UserRating
 from .forms import SignUpForm
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 #for new login request add csrf and forward
@@ -40,6 +42,7 @@ def adduser(request):
     c.update(csrf(request))
     return render_to_response('signup.html',c)
 
+@login_required
 def signedup(request):
     return render_to_response('login.html', {"full_name": request.user.username, 'signup': True})
 
@@ -96,7 +99,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})"""
 
-   
+@login_required   
 def profile(request):
     c={}
     c.update(csrf(request))

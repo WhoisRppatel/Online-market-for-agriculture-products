@@ -10,9 +10,11 @@ from django.contrib import messages
 from login.models import *
 from home.models import *
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 #from django.utils.timezone import timezone
 # Create your views here.
+@login_required
 def loggedin(request):
     if request.user.username == "admin" or request.user.username == "rp":
         return render_to_response('home2.html')
@@ -23,6 +25,7 @@ def loggedin(request):
     print(s.usertype)
     return render_to_response('home.html', {"usertype": s.usertype})
 
+@login_required
 def addproduct(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -32,11 +35,13 @@ def addproduct(request):
     c.update({"usertype": s.usertype})
     return render_to_response('addproduct.html',c)
 
+@login_required
 def addproductprice(request):
     c={}
     c.update(csrf(request))
     return render_to_response('addproductprice.html',c)
 
+@login_required
 def newproduct(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -64,6 +69,7 @@ def newproduct(request):
         print("adfsvkhdbmhefsy")
         return render_to_response('home.html',c)
 
+@login_required
 def addprice(request):
     c={}
     c.update(csrf(request))
@@ -80,6 +86,7 @@ def addprice(request):
         M.save()
         return render_to_response('addproductprice.html',c)
 
+@login_required
 def today(request):
     c={}
     c.update(csrf(request))
@@ -89,6 +96,7 @@ def today(request):
     c.update({"city":city})
     return render_to_response('today.html',c)
 
+@login_required
 def sortby(request,mycity):
     c={}
     c.update(csrf(request))
@@ -99,6 +107,8 @@ def sortby(request,mycity):
     c.update({"M": M})
     c.update({"city":city})
     return render_to_response('today.html',c)
+
+@login_required
 def viewproducts(request):
     c={}
     c.update(csrf(request))
@@ -106,6 +116,7 @@ def viewproducts(request):
     c.update({"market":market})
     return render_to_response('admin_market.html',c)
 
+@login_required
 def updateprice(request,product_id):
     c={}
     c.update(csrf(request))
@@ -123,6 +134,8 @@ def updateprice(request,product_id):
             market.save()
     print(market)
     return redirect('viewproducts')
+
+@login_required
 def nearby(request):
     c={}
     c.update(csrf(request))
@@ -155,7 +168,7 @@ def nearby(request):
     c.update({"usertype": s.usertype,"L":Ans})                
     return render_to_response('nearby.html',c)
 
-
+@login_required
 def report(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -172,6 +185,25 @@ def report(request):
     #print(c)
     return render_to_response('report.html',c)
 
+@login_required
+def removeproduct(request):
+    u=request.user
+    s=UserInfo.objects.get(userid=u)
+    c = {}
+    c.update(csrf(request))
+    c.update({"usertype": s.usertype})
+    P=Product.objects.filter(status=False,owner=u)
+    c.update({"P":P})
+    print(P)
+    return render_to_response('allproducts.html',c)
+
+@login_required
+def remove(request,id):
+    P=Product.objects.get(id=id)
+    P.delete()
+    return redirect('removeproduct')
+
+@login_required
 def review(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -206,6 +238,7 @@ def review(request):
         pass
     return render_to_response('review.html',c)
 
+@login_required
 def addreview(request):
     prevrate=0
     title=request.POST.get('title','')
@@ -240,6 +273,7 @@ def addreview(request):
         r.save()
     return redirect('report')
 
+@login_required
 def deal(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -255,6 +289,7 @@ def deal(request):
     c.update({'uid':uid})
     return render_to_response('adddeal.html',c)
 
+@login_required
 def adddeal(request):
     c={}
     c.update(csrf(request))
@@ -268,6 +303,7 @@ def adddeal(request):
     deal.save()
     return redirect('nearby')
 
+@login_required
 def requestdeal(request):
     u=request.user
     s=UserInfo.objects.get(userid=u)
@@ -280,6 +316,7 @@ def requestdeal(request):
     c.update({"Deal":deal})
     return render_to_response('requestdeal.html',c)
 
+@login_required
 def approve(requset,id):
     deal=Deal.objects.get(id=id)
     prod=Product.objects.get(id=deal.product_id.id)
@@ -297,11 +334,14 @@ def approve(requset,id):
         deal.status=True
         deal.save()
     return redirect('requestdeal')
+
+@login_required
 def decline(request,id):
     deal=Deal.objects.get(id=id)
     deal.delete()       
     return redirect('requestdeal')
 
+@login_required
 def pendingdeal(request):
     c={}
     u=request.user
