@@ -14,8 +14,19 @@
     <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
 		<script src="{% static "js/materialize.min.js" %}"></script>
 		<script src="{% static "js/script.js" %}"></script>        
-
+    <script>
+      window.addEventListener( "pageshow", function ( event ) {
+                var historyTraversal = event.persisted || 
+                         ( typeof window.performance != "undefined" && 
+                              window.performance.navigation.type === 2 );
+              if ( historyTraversal ) {
+              // Handle page restore.
+              window.location.reload();
+            }
+});
+      </script>
 <style>
+
 body {
   font-family: "Lato", sans-serif;
 }
@@ -74,19 +85,25 @@ body {
   .sidenav a {font-size: 18px;}
 }
 </style>
+<script >
+  
+  $('.carousel.carousel-slider').carousel({fullWidth: true});
+        
+</script>
+
 </head>
 	<body class="is-preload">
 		<!-- Nav -->
 			<nav id="menu" style="background-color: rgb(92, 92, 233);">
 				<ul class="links">
-          <li><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></li>
+          <li><span style="font-size:30px;cursor:pointer" onclick="openNav()"> &#9776;</span></li>
           <li><a href="{% url 'loggedin' %}" class="brand-logo center">OMAP</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li style="align : left;"><a href="{% url 'profile' %}">
-            <i class="material-icons " style="font-size:40px">person</i>
+          <li ><a style="font-size:25px;" href="{% url 'profile' %}">
+            Profile
                   </a></li>
-          <li><a href="{% url 'logout' %}"><i class="material-icons " style="font-size:40px">subdirectory_arrow_right</i></a></li>
+          <li ><a  style="font-size:25px;" href="{% url 'logout' %}">Logout</a></li>
       </ul>
       </nav>
     

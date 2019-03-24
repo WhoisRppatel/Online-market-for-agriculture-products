@@ -9,7 +9,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
+   
+    <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.carousel').carousel({
+    padding: 200    
+});
+autoplay();
+function autoplay() {
+    $('.carousel').carousel('next');
+    setTimeout(autoplay, 2500);
+}
+    });           
+</script>
+    
 <style>
 body {
   font-family: "Lato", sans-serif;
@@ -27,22 +43,7 @@ body {
   transition: 0.5s;
   padding-top: 60px;
 }
-.abc{
-          
-          background-image: url("{% static 'home/farmer.jpg'%}");
-          background-size: cover;
-          background-repeat: no-repeat;
-          height: 100%;
-          font-family: 'Numans', sans-serif;
-	}
-.abc2{
-          
-          background-image: url("{% static 'home/buy.jpeg'%}");
-          background-size: cover;
-          background-repeat: no-repeat;
-          height: 100%;
-          font-family: 'Numans', sans-serif;
-}  
+
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -78,10 +79,10 @@ body {
           <li><a href="{% url 'loggedin' %}" class="brand-logo center">OMAP</a></li>
         </ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li style="align : left;"><a href="{% url 'profile' %}">
-            <i class="material-icons " style="font-size:40px">person</i>
+          <li ><a style="font-size:25px;" href="{% url 'profile' %}">
+            Profile
                   </a></li>
-          <li><a href="{% url 'logout' %}"><i class="material-icons " style="font-size:40px">subdirectory_arrow_right</i></a></li>
+          <li ><a  style="font-size:25px;" href="{% url 'logout' %}">Logout</a></li>
       </ul>
       </nav>
     {% if usertype1 %}
@@ -89,12 +90,18 @@ body {
     {% elif C1 %}
     {% elif deals %}
     {% elif usertype != "Merchant" %}
-			<div class="abc">
-          <h4>Welcome Farmer</h4>
-      </div>
+			
+    <div class="carousel carousel-slider" style="height:570px;">
+      <a class="carousel-item" href="#one!"><img src= "{% static 'home/b.jpg' %}" ></a>
+      <a class="carousel-item" href="#two!"><img src="{% static 'home/farmer.jpg' %}"></a>
+      <a class="carousel-item" href="#four!"><img src="{% static 'home/e.jpg' %}"></a>
+    </div>
+    
     {% else %}
-      <div class="abc2">
-        <h4>Welcome Merchant</h4>
+    <div class="carousel carousel-slider" style="height:570px;">
+        <a class="carousel-item" href="#two!"><img src="{% static 'home/buy.jpeg' %}"></a>
+        <a class="carousel-item" href="#three!"><img src="{% static 'home/f.jpg' %}"></a>
+        <a class="carousel-item" href="#four!"><img src="{% static 'home/g.jpg' %}"></a>
     </div>
     {% endif %}
     

@@ -11,5 +11,6 @@
          <a href="{% url 'chatme' ob %}" class="collection-item w3-display-topright" style="color:rgb(28, 16, 71); "><h5>{{ ob.first_name }}</h5></a>
        </div>
      {% endfor %}    
- </div>    
+ </div>
+ <a href="{% url 'loggedin' %}" class="btn btn-info" role="button" >Back to Home</a>
 {% endblock %}

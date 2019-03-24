@@ -5,7 +5,7 @@
 
   <div class="row" style="width:100%;align-self: center">
     
-      <div class="card cyan darken-2 ">
+      <div class="card grey darken-2 ">
         <div class="card-content white-text" >
           <span class="card-title" style="align-content:center;"><h5>Profile</h5></span><hr>
           
@@ -13,7 +13,7 @@
               <h5>Name: {{uinfo.userid.first_name}}  {{uinfo.userid.last_name}}</h5>
                 <h5>City: {{uinfo.city}}</h5>
                 <h5>Mobile Number: {{uinfo.mob}}</h5>
-                <h5>Email: {{uinfo.userid.email}}</h5>
+                <h5>Login As : {{uinfo.usertype}}</h5>
                 <h5>Total Rating: {{star}} from {{rating.totalcount }} users.</h5>
                 
         </div>
@@ -21,5 +21,6 @@
        
       </div>
     </div>
+    <a href="{% url 'loggedin' %}" class="btn btn-info" role="button">Back to Home</a>
   </div>
 {% endblock %}
