@@ -106,6 +106,7 @@ def profile(request):
     user=request.user
     userinfo=UserInfo.objects.get(userid=user)
     c.update({"uinfo":userinfo})
+    c.update({"usertype":userinfo.usertype})
     rating=UserRating.objects.get(userid=user)
     c.update({"rating":rating})
     star=0

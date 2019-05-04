@@ -152,7 +152,11 @@ def nearby(request):
             p=Product.objects.filter(owner=i.userid)
             for j in p:
                 if j.name in Q:
-                    Ans.append(j)
+                    jj=[]
+                    jj.append(j)
+                    rating=UserRating.objects.get(userid=i.userid)
+                    jj.append(rating)
+                    Ans.append(jj)
     else:
         Q=Product.objects.filter(owner=u).values_list('name', flat=True)
         print(Q)
@@ -163,7 +167,11 @@ def nearby(request):
             p=Product.objects.filter(owner=i.userid)
             for j in p:
                 if j.name in Q:
-                    Ans.append(j)
+                    jj=[]
+                    jj.append(j)
+                    rating=UserRating.objects.get(userid=i.userid)
+                    jj.append(rating)
+                    Ans.append(jj)
     print(Ans)
     c.update({"usertype": s.usertype,"L":Ans})                
     return render_to_response('nearby.html',c)

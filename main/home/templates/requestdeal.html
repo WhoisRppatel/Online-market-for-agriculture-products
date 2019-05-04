@@ -10,7 +10,7 @@
 <table id="customers" class="bordered centered striped highlight  lighten-3">
     <tr>
             <th class="center">Product Name</th>
-            <th class="center">Farmer Name</th>
+            <th class="center">Merchant Name</th>
             <th class="center">Quantity</th>
             <th class="center">Price Offerd</th>
             <th class="center">Price Expected</th>
@@ -20,7 +20,7 @@
 {% for d in Deal %}
 <tr>
     <td>{{ d.product_id.name }}</td>
-    <td>{{ d.seller.first_name }}</td>
+    <td>{{ d.buyer.first_name }}</td>
     <td>{{ d.quantity_sold }}</td>
     <td>{{ d.price_sold }}</td>
     <td>{{ d.product_id.price }}</td>

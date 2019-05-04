@@ -31,20 +31,20 @@
     
                         <h6>Name : {{prod.name}}</h6>
                         <h6>Category : {{prod.category}}</h6>
-                        <h6>Owner Name : {{prod.owner.username}}</h6>
+                        <h6>Owner Name : {{prod.owner.first_name}}</h6>
                       
                 
                       
             <form role="form" action="/home/adddeal/" method="POST">
                         {% csrf_token %}
                <div class="form-group">
-                <label class="loginFormElement">Price</label>
+                <label class="loginFormElement" >Price (per 20kg)</label>
                 <input class="form-control" name="price" type="text" required>
                 
               </div>
 
               <div class="form-group">
-               <label class="loginFormElement">Quantity </label>
+               <label class="loginFormElement">Quantity (in kg)</label>
                 <input class="form-control" name="quantity" type="number" max="{{prod.quantity}}" required>
                 Maximum Available: {{prod.quantity}} Kg.
               </div>

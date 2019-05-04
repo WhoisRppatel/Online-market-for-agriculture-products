@@ -10,7 +10,11 @@
 <table class="striped">
     <tr>
             <th>ProductName</th>
-            <th>Seller Name</th>
+            {% if usertype != "Merchant" %}
+            <th>Merchant Name</th>
+            {% else %}
+            <th>Farmer Name</th>
+            {% endif %}
             <th>Quantity</th>
             <th>Price</th>
             <th></th>
@@ -18,7 +22,11 @@
 {% for d in deals %}  
 <tr>
 <td>{{ d.product_id.name }}</td>
-<td>{{ d.product_id.owner }}</td>
+{% if usertype != "Merchant" %}
+<td>{{ d.buyer.first_name }}</td>
+{% else %}
+<td>{{ d.seller.first_name }}</td>
+{% endif %}
 <td>{{ d.quantity_sold }}</td>
 <td>{{ d.price_sold }}</td>
 <td><form action="{% url 'review' %}" method="POST">

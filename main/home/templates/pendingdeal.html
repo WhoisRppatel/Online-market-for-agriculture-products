@@ -14,7 +14,6 @@
             <th class="center">Quantity</th>
             <th class="center">Price Offerd</th>
             <th class="center"></th>
-            <th class="center"></th>
     </tr>
 {% for d in Deal %}
 <tr>
@@ -23,9 +22,6 @@
     <td>{{ d.quantity_sold }}</td>
     <td>{{ d.price_sold }}</td>
     <td></td>
-    <td>
-        <a href="#" class="btn btn-info" onclick="Materialize.toast('Reminder Successfully Sended to Farmer ', 2000)" role="button">Reminder</a>
-    </td>
 </tr>
 {% endfor %}
 </table>  

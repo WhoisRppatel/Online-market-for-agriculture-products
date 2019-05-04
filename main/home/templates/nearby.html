@@ -24,6 +24,7 @@ function fun(ownerName){
   </div>
 <table id="customers" class="bordered centered striped highlight  lighten-3">
     <tr>
+            <th class="center">Rating</th>
             <th class="center">Name</th>
             <th class="center">Product Name</th>
             <th class="center">Quantity</th>
@@ -39,22 +40,23 @@ function fun(ownerName){
             {% endif %}
     </tr>
 {% for ob in L %}  
-{% if not ob.status %}
+{% if not ob.0.status %}
 <tr>
-<td>{{ ob.owner.first_name }}</td>
-<td>{{ ob.name }}</td>
-<td>{{ ob.quantity }}</td>
-<td>{{ ob.price }}</td>
+<td>{% widthratio  ob.1.totalrating   ob.1.totalcount  1.0   %} stars from {{ ob.1.totalcount }} users</td>    
+<td>{{ ob.0.owner.first_name }}</td>
+<td>{{ ob.0.name }}</td>
+<td>{{ ob.0.quantity }}</td>
+<td>{{ ob.0.price }}</td>
 
-<td><a class="btn pink" href="{% url 'chatme' ob.owner %}">Chat</a></td>
+<td><a class="btn pink" href="{% url 'chatme' ob.0.owner %}">Chat</a></td>
 {% if usertype == "Merchant" %}
-<td><a href="#" class="btn green" onclick="fun({{ ob.id }})">View</a></td>
-<img id="{{ ob.id }}" style="display: none;" class="materialboxed" width="650" src="/{{ob.pic_path}}" >
-<td><form method="POST" action="{% url 'deal' %}"> {% csrf_token %} <input type="hidden" name="productId" value="{{ob.id}}"/><input class="btn" type="submit" value="Buy"></button></form></td>
+<td><a href="#" class="btn green" onclick="fun({{ ob.0.id }})">View</a></td>
+<img id="{{ ob.0.id }}" style="display: none;" class="materialboxed" width="650" src="/{{ ob.0.pic_path }}" >
+<td><form method="POST" action="{% url 'deal' %}"> {% csrf_token %} <input type="hidden" name="productId" value="{{ob.0.id}}"/><input class="btn" type="submit" value="Buy"></button></form></td>
 {% endif %}
 </tr>
 {% endif %}
-{% endfor %}  
+{% endfor %}
 </table>
 
 {% endblock %}
